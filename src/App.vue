@@ -3,7 +3,7 @@
     <div class="overlay" :class="{open: sidebar.open}" @click="sidebar.open = false"></div>
     <div class="sidebar" :class="{open: sidebar.open}">
       <ul>
-        <li @click="$router.push({name: 'map'}); sidebar.open = false">
+        <li @click="$router.push({name: 'years'}); sidebar.open = false">
           <i class="fas fa-border-none"></i>
           Mon année
         </li>

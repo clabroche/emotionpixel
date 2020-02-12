@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
-import MapVue from '../views/Map.vue'
+import YearsVue from '../views/Years.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: {name: 'map'}
+    redirect: {name: 'years'}
   },
   {
-    path: '/map',
-    name: 'map',
-    component: MapVue
+    path: '/years',
+    name: 'years',
+    component: YearsVue
   },
   {
     path: '/login',

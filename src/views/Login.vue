@@ -49,11 +49,11 @@ export default {
   methods: {
     async login() {
       await Auth.login(this.user)
-      this.$router.push({name: 'map'})
+      this.$router.push({name: 'years'})
     },
     async registerFun() {
       await Auth.register(this.user)
-      this.$router.push({name: 'map'})
+      this.$router.push({name: 'years'})
     }
   }
 }
