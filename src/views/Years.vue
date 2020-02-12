@@ -14,43 +14,18 @@
         </td>
       </tr>
     </table>
-
-     <transition name="fade">
-      <div class="slider" v-if="selected" :key="selected.format('L')">
-        <div class="close "><i class="fas fa-times" @click="selected = null"></i></div>
-        {{selected.format('L')}}
-        Choisir mon humeur
-        <div class="emotions">
-          <div v-for="emotion of emotions" :key="emotion._id" class="emotion" @click="selectEmotion(selected, emotion)">
-            <div class="label" :style="{backgroundColor: emotion.color}"/>
-            <div class="palette" @click.stop="updateEmotionColor = emotion"><i class="fas fa-palette"></i></div>
-            {{emotion.label}}
-          </div>
-        </div>
-      </div>
-    </transition>
-     <transition name="fade">
-      <div class="slider" v-if="updateEmotionColor" :key="updateEmotionColor._id">
-        <div class="close "><i class="fas fa-times" @click="updateEmotionColor = null"></i></div>
-          <verte model="rgb" menuPosition="top" v-model="updateEmotionColor.color" @input="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></verte>
-      </div>
-     </transition>
+    <edit-emotion-day :selected="selected" @input="updateEmotion($event)"/>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import Verte from 'verte';
-import 'verte/dist/verte.css';
 import Emotions from '../services/Emotions'
-import debounce from 'debounce'
 import Header from '../services/Header';
-moment.locale('fr')
+import EditEmotionDayVue from '../components/EditEmotionDay.vue';
 export default {
   components: {
-    verte: Verte
-  },
-  computed: {
+    'edit-emotion-day': EditEmotionDayVue
   },
   data() {
     return {
@@ -62,7 +37,6 @@ export default {
         }
       }),
       myEmotions: {},
-      updateEmotionColor: null,
       emotions: [],
       selected: null
     }
@@ -88,15 +62,8 @@ export default {
       const emotion = this.emotions.filter(emotion => emotion._id === emotionId).pop()
       return emotion ? emotion.color : ''
     },
-    async updateEmotionColorInApi(emotion) {
-      await Emotions.updateColor(emotion)
-    },
-    debouncedUpdateEmotionColorInApi: debounce(function(emotion) {
-      this.updateEmotionColorInApi(emotion)
-    }, 300),
-    async selectEmotion(date, emotion) {
-      this.$set(this.myEmotions, date.format('L'), emotion._id)
-      await Emotions.update(date.toISOString(), emotion._id)
+    updateEmotion(ev) {
+      this.$set(this.myEmotions, ev.date.format('L'), ev.emotion._id)
       this.selected = null
     }
   }
