@@ -7,6 +7,10 @@
           <i class="fas fa-border-none"></i>
           Mon année
         </li>
+         <li @click="$router.push({name: 'month'}); sidebar.open = false">
+          <i class="fas fa-border-none"></i>
+          Mon mois
+        </li>
       </ul>
       <ul>
         <a href="http://emotionpixel.corentinlabroche.fr/emotionpixel.apk">
