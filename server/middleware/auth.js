@@ -5,7 +5,6 @@ module.exports = async function(req, res, next) {
     {token: req.headers.token},
     {token: {$exists: true}}
   ]})
-  console.log(req.headers.token)
   if(!user) {
     return res.status(403).send('Not authorized')
   } 

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import YearsVue from '../views/Years.vue'
 import MonthVue from '../views/Month.vue'
+import StatisticsVue from '../views/Statistics.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/month',
     name: 'month',
     component: MonthVue
+  },
+  {
+    path: '/stats',
+    name: 'stats',
+    component: StatisticsVue
   },
   {
     path: '/login',

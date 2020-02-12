@@ -54,12 +54,6 @@ Auth.prototype.disconnect = async function() {
  */
 Auth.prototype.login = async function(user) {
   const {data: token} = await API.post('/user/login', user)
-    .catch(err => {
-      console.log(err.message)
-      console.log(err.response)
-      console.log(err.status)
-      console.log("lkjlkj", err)
-    })
   if(token) {
     this.token = token
     this.user = await this.getUser()

@@ -55,7 +55,6 @@ router.delete('/share/:userId', authMiddleWare, async (req, res, next) => {
   res.json(true)
 })
 router.post('/login', async function(req, res, next) {
-  console.log(req.body.email)
   const user = await mongo.collection('users').findOne({email: req.body.email})
   if(!user) {
     return res.status(404).send('User not Found')

@@ -11,6 +11,10 @@
           <i class="fas fa-border-none"></i>
           Mon mois
         </li>
+         <li @click="$router.push({name: 'stats'}); sidebar.open = false">
+          <i class="fas fa-chart-pie"></i>
+          Mes statistiques
+        </li>
       </ul>
       <ul>
         <a href="http://emotionpixel.corentinlabroche.fr/emotionpixel.apk">
