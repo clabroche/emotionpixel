@@ -1,0 +1,27 @@
+
+version: "2"
+services:
+    emotionpixel:
+        image: emotionpixel
+        hostname: emotionpixel
+        environment:
+          mongoDbURL: mongodb://root:123456@mongodb/emotionpixel?authSource=admin
+        expose:
+          - 9854
+        ports:
+          - 9859:9854
+        links:
+          - mongodb
+    mongodb:
+      image: mongo:4
+      hostname: mongodb
+      expose:
+        - 27017
+      ports:
+        - 2075:27017
+      environment:
+         MONGO_INITDB_ROOT_USERNAME: root
+         MONGO_INITDB_ROOT_PASSWORD: 123456
+      command: mongod --port 27017 
+      volumes:
+         - ./mongo-volume:/data/db

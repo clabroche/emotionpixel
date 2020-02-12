@@ -1,0 +1,7 @@
+android
+node_modules
+server/node_modules
+dist
+electron
+.git
+mongo-volume

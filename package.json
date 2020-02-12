@@ -1,0 +1,91 @@
+{
+  "name": "emotionpixel",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "build:all": "npm run build && npm run capacitor:build",
+    "build:android": "npm run build:vue && cd android && ./gradlew assembleDebug && cp ./app/build/outputs/apk/debug/app-debug.apk ../server/public/emotionpixel.apk",
+    "build:vue": "vue-cli-service build && npx cap sync",
+    "capacitor:build": "cd android && ./build.sh",
+    "capacitor:serve": "vue-cli-service capacitor:serve",
+    "install:android": "npm run build:vue && cd android && ./gradlew installDebug && npm run launch:android",
+    "launch:android": "adb shell am start -n com.coco.emotionpixel/.MainActivity"
+  },
+  "dependencies": {
+    "@capacitor/android": "^1.4.0",
+    "@capacitor/cli": "^1.4.0",
+    "@capacitor/core": "^1.4.0",
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "axios": "^0.19.1",
+    "core-js": "^3.4.4",
+    "debounce": "^1.2.0",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
+    "moment": "^2.24.0",
+    "node-ssh": "^7.0.0",
+    "register-service-worker": "^1.6.2",
+    "verte": "0.0.12",
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.3"
+  },
+  "devDependencies": {
+    "@nklayman/vue-cli-plugin-capacitor": "^0.1.1",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-e2e-nightwatch": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-pwa": "^4.1.0",
+    "@vue/cli-plugin-router": "^4.1.0",
+    "@vue/cli-plugin-unit-jest": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.3",
+    "chromedriver": "^78.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "geckodriver": "^1.19.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "off",
+      "no-unused-components": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest"
+  }
+}
