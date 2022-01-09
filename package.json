@@ -16,9 +16,9 @@
     "postinstall": "cd server && npm i "
   },
   "dependencies": {
-    "@capacitor/android": "^1.4.0",
-    "@capacitor/cli": "^1.4.0",
-    "@capacitor/core": "^1.4.0",
+    "@capacitor/android": "^3.3.4",
+    "@capacitor/cli": "^3.3.4",
+    "@capacitor/core": "^3.3.4",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@vitejs/plugin-vue": "^2.0.1",
     "axios": "^0.19.1",

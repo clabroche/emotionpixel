@@ -1,1 +1,6 @@
-{"appId":"com.coco.emotionpixel","appName":"Emotion pixel","bundledWebRuntime":false,"webDir":"./server/public"}
+{
+	"appId": "com.coco.emotionpixel",
+	"appName": "Emotion pixel",
+	"bundledWebRuntime": false,
+	"webDir": "./server/public"
+}
