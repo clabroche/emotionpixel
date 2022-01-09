@@ -9,16 +9,19 @@ const stack = [
     spawnArgs: ['run', 'serve'],
     spawnOptions: {
       cwd:  path.resolve(__dirname, 'server'),
-      env: Object.assign({ mongoDbURL }, process.env)
+      env: Object.assign({ mongoDbURL, PORT: 4545}, process.env),
     }
   },
   {
     label: 'Emotion pixel: front',
     spawnCmd: 'npm',
-    spawnArgs: ['run', 'serve'],
+    spawnArgs: ['run', 'serve:front'],
     spawnOptions: {
       cwd:  __dirname,
-      env: Object.assign({ mongoDbURL }, process.env)
+      env: Object.assign({ 
+        VITE_SERVER_URL:"http://localhost",
+        VITE_SERVER_PORT: 4545,
+       }, process.env)
     }
   }
 ]

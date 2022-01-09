@@ -3,61 +3,52 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
+    "serve": "stack-monitor ./stack.js",
+    "serve:front": "vite",
+    "build": "vite build",
     "build:all": "npm run build && npm run capacitor:build",
     "build:android": "npm run build:vue && cd android && ./gradlew assembleDebug && cp ./app/build/outputs/apk/debug/app-debug.apk ../server/public/emotionpixel.apk",
-    "build:vue": "vue-cli-service build && npx cap sync",
+    "build:vue": "vite build && npx cap sync",
     "capacitor:build": "cd android && ./build.sh",
     "capacitor:serve": "vue-cli-service capacitor:serve",
     "install:android": "npm run build:vue && cd android && ./gradlew installDebug && npm run launch:android",
-    "launch:android": "adb shell am start -n com.coco.emotionpixel/.MainActivity"
+    "launch:android": "adb shell am start -n com.coco.emotionpixel/.MainActivity",
+    "postinstall": "cd server && npm i "
   },
   "dependencies": {
     "@capacitor/android": "^1.4.0",
     "@capacitor/cli": "^1.4.0",
     "@capacitor/core": "^1.4.0",
     "@fortawesome/fontawesome-free": "^5.12.0",
+    "@vitejs/plugin-vue": "^2.0.1",
     "axios": "^0.19.1",
     "chart.js": "^2.9.3",
-    "core-js": "^3.4.4",
     "debounce": "^1.2.0",
+    "eslint-plugin-vue": "^8.2.0",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "node-ssh": "^7.0.0",
-    "register-service-worker": "^1.6.2",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-visualizer": "^5.5.2",
+    "sass": "^1.47.0",
     "verte": "0.0.12",
-    "vue": "^2.6.10",
+    "vite": "^2.7.10",
+    "vite-plugin-html": "^2.1.2",
+    "vue": "^3.2.26",
     "vue-chartjs": "^3.5.0",
-    "vue-router": "^3.1.3"
+    "vue-router": "^4.0.12",
+    "vue3-colorpicker": "^2.0.4"
   },
   "devDependencies": {
+    "@iryu54/stack-monitor": "^1.8.5",
     "@nklayman/vue-cli-plugin-capacitor": "^0.1.1",
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-plugin-pwa": "^4.1.0",
-    "@vue/cli-plugin-router": "^4.1.0",
-    "@vue/cli-plugin-unit-jest": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "babel-eslint": "^10.0.3",
-    "chromedriver": "^78.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "geckodriver": "^1.19.1",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "eslint": "^8.6.0"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "es2021": true
     },
     "extends": [
       "plugin:vue/essential",
@@ -67,9 +58,6 @@
       "no-console": "off",
       "no-unused-vars": "off",
       "no-unused-components": "off"
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
     },
     "overrides": [
       {

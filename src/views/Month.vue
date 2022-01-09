@@ -14,7 +14,7 @@
       <div
         v-for="day of moment().set({month: currentMonthNumber}).daysInMonth()" :key="day"
         @click="selected = moment().set({date:day, month: currentMonthNumber}).month() === currentMonthNumber ? moment().set({date:day, month: currentMonthNumber}) : null"
-          :style="{backgroundColor: getColor(moment().set({date:day, month: currentMonthNumber}).format('L'))}"
+          :style="{backgroundColor: getColor(moment().set({date:day, month: currentMonthNumber}).format('DD/MM/YYYY'))}"
       >{{day}}</div>
     </div>
     <edit-emotion-day :selected="selected" @input="updateEmotion($event)"/>
@@ -23,10 +23,7 @@
 
 <script>
 import moment from 'moment'
-import Verte from 'verte';
-import 'verte/dist/verte.css';
 import Emotions from '../services/Emotions'
-import debounce from 'debounce'
 import Header from '../services/Header';
 import {times} from 'lodash-es'
 import EditEmotionDayVue from '../components/EditEmotionDay.vue';
@@ -77,7 +74,7 @@ export default {
       return emotion ? emotion.color : ''
     },
     updateEmotion(ev) {
-      this.$set(this.myEmotions, ev.date.format('L'), ev.emotion._id)
+      this.myEmotions[ev.date.format('DD/MM/YYYY')] = ev.emotion._id
       this.selected = null
     }
   }

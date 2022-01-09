@@ -9,7 +9,7 @@
         <td ><div class="dayNumber">{{dayNumber}}</div></td>
         <td v-for="(month, i) of months" :key="month.label"
           :class="{dateInexistance: moment().set({date:dayNumber, month: i}).month() !== i}"
-          :style="{backgroundColor: getColor(moment().set({date:dayNumber, month: i}).format('L'))}"
+          :style="{backgroundColor: getColor(moment().set({date:dayNumber, month: i}).format('DD/MM/YYYY'))}"
           @click="selected = moment().set({date:dayNumber, month: i}).month() === i ? moment().set({date:dayNumber, month: i}) : null">
         </td>
       </tr>
@@ -63,7 +63,7 @@ export default {
       return emotion ? emotion.color : ''
     },
     updateEmotion(ev) {
-      this.$set(this.myEmotions, ev.date.format('L'), ev.emotion._id)
+      this.myEmotions[ev.date.format('DD/MM/YYYY')] = ev.emotion._id
       this.selected = null
     }
   }

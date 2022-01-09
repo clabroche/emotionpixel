@@ -1,3 +1,3 @@
 export default {
-  title: 'Location Sharing'
+  title: 'Emotion Pixel'
 }

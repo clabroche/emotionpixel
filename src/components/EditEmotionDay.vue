@@ -1,9 +1,9 @@
 <template>
   <div>
      <transition name="fade">
-      <div class="slider" v-if="selected" :key="selected.format('L')">
+      <div class="slider" v-if="selected" :key="selected.format('DD/MM/YYYY')">
         <div class="close "><i class="fas fa-times" @click="selected = null"></i></div>
-        {{selected.format('L')}}
+        {{selected.format('DD/MM/YYYY')}}
         Choisir mon humeur
         <div class="emotions">
           <div v-for="emotion of emotions" :key="emotion._id" class="emotion" @click="selectEmotion(selected, emotion)">
@@ -17,19 +17,21 @@
      <transition name="fade">
       <div class="slider" v-if="updateEmotionColor" :key="updateEmotionColor._id">
         <div class="close "><i class="fas fa-times" @click="updateEmotionColor = null"></i></div>
-          <verte model="rgb" menuPosition="top" v-model="updateEmotionColor.color" @input="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></verte>
+          <color-picker v-model:pureColor="updateEmotionColor.color" @update:pureColor="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></color-picker>
       </div>
      </transition>
   </div>
 </template>
 
 <script>
-import Verte from 'verte'
 import Emotions from '../services/Emotions'
 import debounce from 'debounce'
+import { ColorPicker } from "vue3-colorpicker";
+import "vue3-colorpicker/style.css";
+
 export default {
   components: {
-    verte: Verte,
+    ColorPicker,
   }, 
   props: {
     selected: {default: null}
@@ -45,6 +47,7 @@ export default {
   },
   methods: {
     async updateEmotionColorInApi(emotion) {
+      console.log('lkldezkfeezklfk')
       await Emotions.updateColor(emotion)
     },
     debouncedUpdateEmotionColorInApi: debounce(function(emotion) {

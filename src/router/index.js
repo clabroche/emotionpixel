@@ -1,11 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import YearsVue from '../views/Years.vue'
 import MonthVue from '../views/Month.vue'
 import StatisticsVue from '../views/Statistics.vue'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -40,10 +37,11 @@ const routes = [
   },
 ]
 
-const router = new VueRouter({
-  mode: 'hash',
-  base: process.env.BASE_URL,
-  routes
-})
 
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+
+  // ...
+})
 export default router

@@ -28,7 +28,7 @@ router.post('/date/:dateISO/emotionId/:emotionId', authMiddleWare, async (req, r
   const date = moment(req.params.dateISO)
   const emotionId = req.params.emotionId
   const update = {}
-  update[date.format('L')] = mongo.getID(emotionId)
+  update[date.format('DD/MM/YYYY')] = mongo.getID(emotionId)
   await mongo.collection('myEmotions').updateOne({ userId: req.user._id }, { $set: update }, { upsert: true })
   res.json(true)
 })

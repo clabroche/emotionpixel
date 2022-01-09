@@ -113,9 +113,9 @@ export default {
     getAllEmotionsBetween(startDate, endDate) {
       const date = startDate.clone()
       const dates = []
-      while(date.format('L') !== endDate.format('L')) {
-        const emotion = this.myEmotions && this.myEmotions[date.format('L')]
-          ? this.myEmotions[date.format('L')]
+      while(date.format('DD/MM/YYYY') !== endDate.format('DD/MM/YYYY')) {
+        const emotion = this.myEmotions && this.myEmotions[date.format('DD/MM/YYYY')]
+          ? this.myEmotions[date.format('DD/MM/YYYY')]
           : null
         dates.push(emotion)
         date.add(1, 'days')
@@ -129,7 +129,7 @@ export default {
       return emotion ? emotion.color : ''
     },
     updateEmotion(ev) {
-      this.$set(this.myEmotions, ev.date.format('L'), ev.emotion._id)
+      this.myEmotions[ev.date.format('DD/MM/YYYY')] = ev.emotion._id
       this.selected = null
     }
   }
