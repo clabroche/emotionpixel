@@ -9,7 +9,7 @@
         </div>
         <div @click="currentMonthNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <pie-chart :series="datacollectionMonth.data" :labels="datacollectionMonth.labels"/>
+      <pie-chart :series="datacollectionMonth.data" :labels="datacollectionMonth.labels" :colors="datacollectionMonth.backgroundColor"/>
     </div>
     <div class="stat-container">
         <div class="month-selector">
@@ -20,7 +20,7 @@
         </div>
         <div @click="currentYearNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <pie-chart :series="datacollectionYear.data" :labels="datacollectionYear.labels"/>
+      <pie-chart :series="datacollectionYear.data" :labels="datacollectionYear.labels" :colors="datacollectionYear.backgroundColor"/>
     </div>
     <div class="floating-button" @click="chartType = chartType ==='bar-chart' ? 'pie-chart':'bar-chart'">
       <i class="fa" :class="{'fa-chart-bar': chartType ==='pie-chart', 'fa-chart-pie': chartType ==='bar-chart'}"></i>

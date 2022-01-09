@@ -13,6 +13,7 @@ export default {
   props: {
     series: {default: [], required: true},
     labels: {default: [], required: true},
+    colors: {default: [], required: true},
   },
   setup(props) {
     return {
@@ -20,7 +21,8 @@ export default {
         chart: {
           type: 'pie',
         },
-        labels: props.labels
+        labels: props.labels,
+        colors: props.colors
       }))
     }
   }
