@@ -1,3 +1,4 @@
+import { ref } from 'vue'
 import API from './API'
 import User from './User'
 function Auth() {
@@ -5,6 +6,7 @@ function Auth() {
    * @type {User}
    */
   this.user = null
+  this.authenticated = ref(false)
   /** @type {String} */
   this.token = localStorage.getItem('token')
   if(this.token) {
@@ -29,6 +31,7 @@ Auth.prototype.getUser = async function() {
     }
   })
   this.user = new User(user)
+  if(this.user) this.authenticated.value = true
   return this.user
 }
 /**
@@ -44,6 +47,7 @@ Auth.prototype.save = async function() {
 }
 Auth.prototype.disconnect = async function() {
   this.user = null
+  this.authenticated.value = false
   this.token = null
   localStorage.setItem('token', null)
 }

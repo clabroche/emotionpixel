@@ -30,7 +30,7 @@
       </ul>
     </div>
     <div id="nav" v-if="$route.name !== 'login'">
-      <div class="trigger" v-if="Auth.user" @click="sidebar.open = true"><i class="fas fa-list"></i></div>
+      <div class="trigger" v-if="Auth.authenticated" @click="sidebar.open = true"><i class="fas fa-list"></i></div>
       {{Header.title}}
     </div>
     <div class="app-content">
