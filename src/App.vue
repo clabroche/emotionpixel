@@ -151,8 +151,11 @@ ul {
   transform: translateY(70vh)
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 @import url('~@fortawesome/fontawesome-free/css/all.min.css');
+
+</style>
+<style lang="scss" scoped>
 .overlay {
   z-index: 1300;
   position: absolute;

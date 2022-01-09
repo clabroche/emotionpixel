@@ -32,6 +32,13 @@ router.post('/date/:dateISO/emotionId/:emotionId', authMiddleWare, async (req, r
   await mongo.collection('myEmotions').updateOne({ userId: req.user._id }, { $set: update }, { upsert: true })
   res.json(true)
 })
+router.delete('/date/:dateISO', authMiddleWare, async (req, res, next) => {
+  const date = moment(req.params.dateISO)
+  const update = {}
+  update[date.format('DD/MM/YYYY')] = 1
+  await mongo.collection('myEmotions').updateOne({ userId: req.user._id }, { $unset: update }, { upsert: true })
+  res.json(true)
+})
 
 router.post('/:emotionId/color/:color', authMiddleWare, async (req, res, next) => {
   const {emotionId, color} = req.params

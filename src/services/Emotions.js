@@ -38,4 +38,10 @@ Emotion.update = async function (dateISO, emotionId) {
   })
 }
 
+Emotion.remove = async function (dateISO) {
+  await API.delete(`/emotions/date/${dateISO}`, {
+    headers: { token: Auth.token }
+  })
+}
+
 export default Emotion

@@ -6,6 +6,10 @@
         {{selected.format('DD/MM/YYYY')}}
         Choisir mon humeur
         <div class="emotions">
+          <div class="emotion" @click="remove(selected)">
+            <div class="label" :style="{backgroundColor: 'white'}"/>
+            Supprimer
+          </div>
           <div v-for="emotion of emotions" :key="emotion._id" class="emotion" @click="selectEmotion(selected, emotion)">
             <div class="label" :style="{backgroundColor: emotion.color}"/>
             <div class="palette" @click.stop="updateEmotionColor = emotion"><i class="fas fa-palette"></i></div>
@@ -56,6 +60,10 @@ export default {
     async selectEmotion(date, emotion) {
       await Emotions.update(date.toISOString(), emotion._id)
       this.$emit('input', {date, emotion})
+    },
+    async remove(date) {
+      await Emotions.remove(date.toISOString())
+      this.$emit('input', {date})
     }
   }
 }

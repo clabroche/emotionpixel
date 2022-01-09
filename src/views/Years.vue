@@ -63,7 +63,7 @@ export default {
       return emotion ? emotion.color : ''
     },
     updateEmotion(ev) {
-      this.myEmotions[ev.date.format('DD/MM/YYYY')] = ev.emotion._id
+      this.myEmotions[ev.date.format('DD/MM/YYYY')] = ev.emotion?._id
       this.selected = null
     }
   }
