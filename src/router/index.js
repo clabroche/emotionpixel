@@ -2,7 +2,7 @@ import Login from '../views/Login.vue'
 import YearsVue from '../views/Years.vue'
 import MonthVue from '../views/Month.vue'
 import StatisticsVue from '../views/Statistics.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
@@ -39,9 +39,7 @@ const routes = [
 
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
-
-  // ...
 })
 export default router
