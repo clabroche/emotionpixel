@@ -1,11 +1,11 @@
-FROM alpine:3.8 as builder
+FROM alpine:3.15 as builder
 RUN apk --no-cache add gcc g++ make python nodejs npm
-WORKDIR /locationsharing
+WORKDIR /emotionpixel
 COPY ./server .
-RUN rm -rf .git && rm -rf node_modules && npm i --production
+RUN npm i --production
 
-FROM alpine:3.8
+FROM alpine:3.15
 RUN apk --no-cache add nodejs
-WORKDIR /locationsharing
-COPY --from=builder /locationsharing .
+WORKDIR /emotionpixel
+COPY --from=builder /emotionpixel .
 CMD ["node", "bin/www"]
