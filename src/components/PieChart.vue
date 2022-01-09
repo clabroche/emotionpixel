@@ -1,13 +1,28 @@
+<template>
+  <apexchart width="500" type="pie" :options="options" :series="series"></apexchart>
+</template>
+
 <script>
-import { Pie, mixins } from 'vue-chartjs'
-const { reactiveProp } = mixins
+import { computed } from 'vue';
+import VueApexCharts from "vue3-apexcharts";
 
 export default {
-  extends: Pie,
-  mixins: [reactiveProp],
-  props: ['options'],
-  mounted () {
-    this.renderChart(this.chartData, this.options)
+  components: {
+    apexchart: VueApexCharts
+  },
+  props: {
+    series: {default: [], required: true},
+    labels: {default: [], required: true},
+  },
+  setup(props) {
+    return {
+      options: computed(() => ({
+        chart: {
+          type: 'pie',
+        },
+        labels: props.labels
+      }))
+    }
   }
 }
 </script>

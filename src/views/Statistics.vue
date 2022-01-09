@@ -9,10 +9,10 @@
         </div>
         <div @click="currentMonthNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <component :options="{legend:{display: chartType === 'pie-chart'}}" :is="chartType"  class="pie" :chart-data="datacollectionMonth"/>
+      <pie-chart :series="datacollectionMonth.data" :labels="datacollectionMonth.labels"/>
     </div>
     <div class="stat-container">
-       <div class="month-selector">
+        <div class="month-selector">
         <div @click="currentYearNumber--"><i class="fas fa-chevron-left"></i></div>
         <div>
           Pour l'année
@@ -20,7 +20,7 @@
         </div>
         <div @click="currentYearNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <component :options="{legend:{display: chartType === 'pie-chart'}}" :is="chartType"  class="pie" :chart-data="datacollectionYear"/>
+      <pie-chart :series="datacollectionYear.data" :labels="datacollectionYear.labels"/>
     </div>
     <div class="floating-button" @click="chartType = chartType ==='bar-chart' ? 'pie-chart':'bar-chart'">
       <i class="fa" :class="{'fa-chart-bar': chartType ==='pie-chart', 'fa-chart-pie': chartType ==='bar-chart'}"></i>
@@ -34,11 +34,9 @@ import Emotions from '../services/Emotions'
 import PieChartVue from '../components/PieChart.vue'
 import {groupBy} from 'lodash-es'
 import moment from 'moment'
-import BarChartVue from '../components/BarChart.vue'
 export default {
   components: {
     'pie-chart': PieChartVue,
-    'bar-chart': BarChartVue
   },
   computed: {
     datacollectionMonth() {
@@ -61,7 +59,7 @@ export default {
       myEmotions: {},
       datacollection: null,
       currentMonthNumber: moment().month(),
-      currentYearNumber: moment().years(),
+      currentYearNumber: moment().year(),
       moment
     }
   },
@@ -100,14 +98,10 @@ export default {
       }
       return  {
         labels,
-        datasets: [
-          {
-            borderColor: "#AAAAAA",
-            borderWidth: "2px",
-            backgroundColor,
-            data  
-          }
-        ]
+        borderColor: "#AAAAAA",
+        borderWidth: "2px",
+        backgroundColor,
+        data  
       }
     },
     getAllEmotionsBetween(startDate, endDate) {
