@@ -39,12 +39,24 @@ router.delete('/date/:dateISO', authMiddleWare, async (req, res, next) => {
   await mongo.collection('myEmotions').updateOne({ userId: req.user._id }, { $unset: update }, { upsert: true })
   res.json(true)
 })
+router.delete('/:id', authMiddleWare, async (req, res, next) => {
+  await mongo.collection('emotions').deleteOne({ userId: req.user._id,  _id: mongo.getID(req.params.id)})
+  res.json(true)
+})
 
 router.post('/:emotionId/color/:color', authMiddleWare, async (req, res, next) => {
-  const {emotionId, color} = req.params
+  const { emotionId, color } = req.params
   const match = { _id: mongo.getID(emotionId), userId: req.user._id }
-  await mongo.collection('emotions').updateOne(match, { $set: {color} })
+  await mongo.collection('emotions').updateOne(match, { $set: { color } })
   res.json(true)
+})
+
+router.post('/', authMiddleWare, async (req, res, next) => {
+  const { label, color } = req.body
+  const result = await mongo.collection('emotions').insertOne({
+    label, color, userId: req.user._id
+  })
+  res.json(result.insertedId)
 })
 
   

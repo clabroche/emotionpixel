@@ -8,7 +8,7 @@
       <div @click="currentMonthNumber++"><i class="fas fa-chevron-right"></i></div>
     </div>
     <div class="grid header">
-      <div class="header" v-for="day of days" :key="day">{{moment().set({d: day}).format('dddd')}}</div>
+      <div class="header title" v-for="day of days" :key="day">{{moment().set({d: day}).format('dddd')}}</div>
     </div>
     <div class="grid">
       <div
@@ -17,7 +17,7 @@
           :style="{backgroundColor: getColor(moment().set({date:day, month: currentMonthNumber}).format('DD/MM/YYYY'))}"
       >{{day}}</div>
     </div>
-    <edit-emotion-day :selected="selected" @input="updateEmotion($event)"/>
+    <edit-emotion-day @reload="reload" :selected="selected" @input="updateEmotion($event)"/>
   </div>
 </template>
 
@@ -54,19 +54,21 @@ export default {
   },
   async mounted() {
     Header.title = 'Emotion Pixel'
-    this.emotions = await Emotions.all()
-    this.emotions.push({
-      _id: 'null',
-      label: 'Aucune émotion',
-      color: 'rgb(255,255,255)'
-    })
-    this.myEmotions = await Emotions.my()
-    console.log(this.emotions)
-     if(window.cordova) {
+    await this.reload()
+    if(window.cordova) {
       await this.appReady()
     }
   },
   methods: {
+    async reload() {
+      this.emotions = await Emotions.all()
+      this.emotions.push({
+        _id: 'null',
+        label: 'Aucune émotion',
+        color: 'rgb(255,255,255)'
+      })
+      this.myEmotions = await Emotions.my()
+    },
     getColor(date) {
       if(!this.myEmotions) return ''
       const emotionId = this.myEmotions[date]
@@ -107,8 +109,16 @@ export default {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap:1px;
+  .title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
   &.header {
-    height: 2em
+    height: 2em;
   }
   &>div {
     display: flex;

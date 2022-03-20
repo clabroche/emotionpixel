@@ -9,7 +9,7 @@
         </div>
         <div @click="currentMonthNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <pie-chart :series="datacollectionMonth.data" :labels="datacollectionMonth.labels" :colors="datacollectionMonth.backgroundColor"/>
+      <pie-chart width="100%" :series="datacollectionMonth.data" :labels="datacollectionMonth.labels" :colors="datacollectionMonth.backgroundColor"/>
     </div>
     <div class="stat-container">
         <div class="month-selector">
@@ -20,23 +20,23 @@
         </div>
         <div @click="currentYearNumber++"><i class="fas fa-chevron-right"></i></div>
       </div>
-      <pie-chart :series="datacollectionYear.data" :labels="datacollectionYear.labels" :colors="datacollectionYear.backgroundColor"/>
+      <pie-chart width="100%" :series="datacollectionYear.data" :labels="datacollectionYear.labels" :colors="datacollectionYear.backgroundColor"/>
     </div>
-    <div class="floating-button" @click="chartType = chartType ==='bar-chart' ? 'pie-chart':'bar-chart'">
+    <!-- <div class="floating-button" @click="chartType = chartType ==='bar-chart' ? 'pie-chart':'bar-chart'">
       <i class="fa" :class="{'fa-chart-bar': chartType ==='pie-chart', 'fa-chart-pie': chartType ==='bar-chart'}"></i>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import Header from '../services/Header'
 import Emotions from '../services/Emotions'
-import PieChartVue from '../components/PieChart.vue'
+import BarChartVue from '../components/PieChart.vue'
 import {groupBy} from 'lodash-es'
 import moment from 'moment'
 export default {
   components: {
-    'pie-chart': PieChartVue,
+    'pie-chart': BarChartVue,
   },
   computed: {
     datacollectionMonth() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-     <transition name="fade">
+    <transition name="fade">
       <div class="slider" v-if="selected" :key="selected.format('DD/MM/YYYY')">
         <div class="close "><i class="fas fa-times" @click="selected = null"></i></div>
         {{selected.format('DD/MM/YYYY')}}
@@ -13,17 +13,34 @@
           <div v-for="emotion of emotions" :key="emotion._id" class="emotion" @click="selectEmotion(selected, emotion)">
             <div class="label" :style="{backgroundColor: emotion.color}"/>
             <div class="palette" @click.stop="updateEmotionColor = emotion"><i class="fas fa-palette"></i></div>
+            <div class="delete" @click.stop="deleteColor(emotion._id, selected)"><i class="fas fa-times"></i></div>
             {{emotion.label}}
+          </div>
+          <div class="emotion" @click="add(selected)">
+            <div class="label" :style="{backgroundColor: 'white'}"/>
+            Ajouter
           </div>
         </div>
       </div>
     </transition>
-     <transition name="fade">
-      <div class="slider" v-if="updateEmotionColor" :key="updateEmotionColor._id">
-        <div class="close "><i class="fas fa-times" @click="updateEmotionColor = null"></i></div>
-          <color-picker v-model:pureColor="updateEmotionColor.color" @update:pureColor="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></color-picker>
-      </div>
-     </transition>
+    <transition name="fade">
+    <div class="slider" v-if="updateEmotionColor" :key="updateEmotionColor._id">
+      <div class="close "><i class="fas fa-times" @click="updateEmotionColor = null"></i></div>
+        <color-picker v-model:pureColor="updateEmotionColor.color" @update:pureColor="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></color-picker>
+    </div>
+    </transition>
+    <modal ref="addModal">
+      <template #body>
+        <div>
+          Nom de l'émotion
+          <input type="text" v-model="newEmotion.label" id="">
+        </div>
+        <div>
+          Couleur
+          <color-picker v-model:pureColor="newEmotion.color" @update:pureColor="debouncedUpdateEmotionColorInApi(updateEmotionColor)"></color-picker>
+        </div>
+      </template>
+    </modal>
   </div>
 </template>
 
@@ -32,10 +49,12 @@ import Emotions from '../services/Emotions'
 import debounce from 'debounce'
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
+import Modal from './Modal.vue'
 
 export default {
   components: {
     ColorPicker,
+    Modal
   }, 
   props: {
     selected: {default: null}
@@ -44,6 +63,7 @@ export default {
     return {
       updateEmotionColor: null,
       emotions: [],
+      newEmotion: null
     }
   },
   async mounted() {
@@ -51,7 +71,6 @@ export default {
   },
   methods: {
     async updateEmotionColorInApi(emotion) {
-      console.log('lkldezkfeezklfk')
       await Emotions.updateColor(emotion)
     },
     debouncedUpdateEmotionColorInApi: debounce(function(emotion) {
@@ -64,6 +83,22 @@ export default {
     async remove(date) {
       await Emotions.remove(date.toISOString())
       this.$emit('input', {date})
+    }, 
+    async deleteColor(_id, date) {
+      await Emotions.delete(_id)
+      this.$emit('reload')
+      this.$emit('input', {date})
+      this.emotions = await Emotions.all()
+    },
+    async add(date) {
+      this.newEmotion = {}
+      this.$refs.addModal.open().subscribe(async res => {
+        if(!res) return
+        const id = await Emotions.add(this.newEmotion)
+        this.selectEmotion(date, {... this.newEmotion, _id: id})
+        this.$emit('reload')
+        this.newEmotion = {}
+      })
     }
   }
 }
@@ -109,7 +144,7 @@ export default {
       &:hover {
         background-color: rgba(255,255,255,0.2);
       }
-      .palette {
+      .palette, .delete {
         position: absolute;
         bottom: 4px;
         right: 4px;
@@ -121,6 +156,9 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+      .delete {
+        left:  4px;
       }
       .label {
         position: absolute;

@@ -37,9 +37,20 @@ Emotion.update = async function (dateISO, emotionId) {
     headers: { token: Auth.token }
   })
 }
+Emotion.add = async function (emotion) {
+  const {data: id}  = await API.post(`/emotions`, emotion, {
+    headers: { token: Auth.token }
+  })
+  return id
+}
 
 Emotion.remove = async function (dateISO) {
   await API.delete(`/emotions/date/${dateISO}`, {
+    headers: { token: Auth.token }
+  })
+}
+Emotion.delete = async function (id) {
+  await API.delete(`/emotions/${id}`, {
     headers: { token: Auth.token }
   })
 }

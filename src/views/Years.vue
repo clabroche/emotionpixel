@@ -14,7 +14,7 @@
         </td>
       </tr>
     </table>
-    <edit-emotion-day :selected="selected" @input="updateEmotion($event)"/>
+    <edit-emotion-day @reload="reload" :selected="selected" @input="updateEmotion($event)"/>
   </div>
 </template>
 
@@ -43,19 +43,21 @@ export default {
   },
   async mounted() {
     Header.title = 'Emotion Pixel'
-    this.emotions = await Emotions.all()
-    this.emotions.push({
-      _id: 'null',
-      label: 'Aucune émotion',
-      color: 'rgb(255,255,255)'
-    })
-    this.myEmotions = await Emotions.my()
-    console.log(this.emotions)
-     if(window.cordova) {
+    await this.reload()
+    if(window.cordova) {
       await this.appReady()
     }
   },
   methods: {
+    async reload() {
+      this.emotions = await Emotions.all()
+      this.emotions.push({
+        _id: 'null',
+        label: 'Aucune émotion',
+        color: 'rgb(255,255,255)'
+      })
+      this.myEmotions = await Emotions.my()
+    },
     getColor(date) {
       if(!this.myEmotions) return ''
       const emotionId = this.myEmotions[date]
